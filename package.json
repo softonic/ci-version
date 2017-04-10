@@ -1,0 +1,27 @@
+{
+  "name": "@softonic/ci-version",
+  "version": "0.1.0",
+  "description": "CLI program to determine new versions in CI projects",
+  "main": "index.js",
+  "bin": {
+    "ci-version": "ci-version.js"
+  },
+  "scripts": {
+    "test": "echo 'No tests'"
+  },
+  "author": "Rubén Norte <ruben.norte@softonic.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/softonic/ci-version",
+  "dependencies": {
+    "caporal": "^0.4.1",
+    "semver": "^5.3.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softonic/ci-version.git"
+  },
+  "bugs": {
+    "url": "https://github.com/softonic/ci-version/issues"
+  }
+}
