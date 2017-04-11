@@ -1,6 +1,6 @@
 # ci-version
 
-CLI program to determine the new version that should be assign to the current build/commit in a CI/CD workflow.
+CLI program to determine the new version that should be assigned to the current build/commit in a CI/CD workflow.
 
 ## Installation
 
@@ -22,11 +22,11 @@ ci-version -r /path/to/my/repository --compatible-with composer.json
 With Docker:
 
 ```
-docker run -v /path/to/my/repository:/repo:ro softonic/ci-version
+docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version
 #> 1.2.0
-docker run -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with package.json
+docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with package.json
 #> 1.2.0
-docker run -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with composer.json
+docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with composer.json
 #> 1.2.0
 ```
 
@@ -34,7 +34,7 @@ The repository should always be mounted in `/repo` or otherwise the entrypoint s
 
 The version returned (if any) it is supposed to be used to create a new tag in the repository.
 
-## How it works
+## How it works
 
 ### Without compatible-with option
 
@@ -67,7 +67,7 @@ Examples:
   => New version: <none>
   ```
 
-### With compatible-with option
+### With compatible-with option
 
 - If it already contains a version tag (e.g.: `1.0.0` or `v1.0.0`)
   * And it is compatible with the version in the `package.json` or in the `composer.json`, then it returns nothing.
