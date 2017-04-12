@@ -17,8 +17,6 @@ ci-version -r /path/to/my/repository --compatible-with package.json
 #> 1.2.0
 ci-version -r /path/to/my/repository --compatible-with composer.json
 #> 1.2.0
-ci-version -n
-#> 1.2.0
 ```
 
 With Docker:
@@ -29,8 +27,6 @@ docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version
 docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with package.json
 #> 1.2.0
 docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with composer.json
-#> 1.2.0
-docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version -n
 #> 1.2.0
 ```
 

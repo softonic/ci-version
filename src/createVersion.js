@@ -31,11 +31,11 @@ function createCompatibleVersion({ currentVersions, allVersions, compatibleWith 
  * @param  {string[]} allVersions List of all versions in the repository
  * @return {string|null}
  */
-function createGlobalVersion({ currentVersions, allVersions, compatibleWith, next }) {
+function createGlobalVersion({ currentVersions, allVersions, compatibleWith }) {
   const currentVersion = semver.maxSatisfying(currentVersions, '*');
   const latestVersion = semver.maxSatisfying(allVersions, '*');
 
-  if (currentVersion && !next ) {
+  if (currentVersion) {
     return null;
   }
 
@@ -68,12 +68,15 @@ function getVersions(repositoryPath) {
 /**
  * Returns a suitable version for the current commit in the given repository,
  * optionally compatible with the version found in the given file format.
- * @param  {string} repositoryPath [description]
+ * @param  {string} repositoryPath
  * @param  {string} [compatibleWith] 'package.json' or 'composer.json'
+ * @param  {boolean} [isNext=false] return the next version that would be created.
  * @return {string|null}
  */
-function createVersion({ repositoryPath, compatibleWith, next }) {
-  const { currentVersions, allVersions } = getVersions(repositoryPath);
+function createVersion({ repositoryPath, compatibleWith, isNext }) {
+  const versions = getVersions(repositoryPath);
+  const currentVersions = isNext ? [] : versions.currentVersions;
+  const allVersions = versions.allVersions;
 
   if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
     const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, compatibleWith)));
@@ -81,7 +84,7 @@ function createVersion({ repositoryPath, compatibleWith, next }) {
     return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
   }
 
-  return createGlobalVersion({ currentVersions, allVersions, next });
+  return createGlobalVersion({ currentVersions, allVersions });
 }
 
 module.exports = createVersion;
