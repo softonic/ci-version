@@ -17,6 +17,8 @@ ci-version -r /path/to/my/repository --compatible-with package.json
 #> 1.2.0
 ci-version -r /path/to/my/repository --compatible-with composer.json
 #> 1.2.0
+ci-version -n
+#> 1.2.0
 ```
 
 With Docker:
@@ -28,11 +30,15 @@ docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compati
 #> 1.2.0
 docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version --compatible-with composer.json
 #> 1.2.0
+docker run --rm -v /path/to/my/repository:/repo:ro softonic/ci-version -n
+#> 1.2.0
 ```
 
 The repository should always be mounted in `/repo` or otherwise the entrypoint should be modified.
 
 The version returned (if any) it is supposed to be used to create a new tag in the repository.
+
+If we want to have the next tag version that we should create, we can use --next option.
 
 ## How it works
 
@@ -65,6 +71,14 @@ Examples:
   Current commit tags: 1.2.0
   All tags: 1.0.0 1.1.0 1.2.0
   => New version: <none>
+  ```
+
+- Prepare next commit (Using --next option)
+
+  ```
+  Current commit tags: 1.2.0
+  All tags: 1.0.0 1.1.0 1.2.0
+  => New version: 1.3.0
   ```
 
 ### With compatible-with option

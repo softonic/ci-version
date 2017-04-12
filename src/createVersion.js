@@ -31,11 +31,11 @@ function createCompatibleVersion({ currentVersions, allVersions, compatibleWith 
  * @param  {string[]} allVersions List of all versions in the repository
  * @return {string|null}
  */
-function createGlobalVersion({ currentVersions, allVersions, compatibleWith }) {
+function createGlobalVersion({ currentVersions, allVersions, compatibleWith, next }) {
   const currentVersion = semver.maxSatisfying(currentVersions, '*');
   const latestVersion = semver.maxSatisfying(allVersions, '*');
 
-  if (currentVersion) {
+  if (currentVersion && !next ) {
     return null;
   }
 
@@ -72,7 +72,7 @@ function getVersions(repositoryPath) {
  * @param  {string} [compatibleWith] 'package.json' or 'composer.json'
  * @return {string|null}
  */
-function createVersion({ repositoryPath, compatibleWith }) {
+function createVersion({ repositoryPath, compatibleWith, next }) {
   const { currentVersions, allVersions } = getVersions(repositoryPath);
 
   if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
@@ -81,7 +81,7 @@ function createVersion({ repositoryPath, compatibleWith }) {
     return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
   }
 
-  return createGlobalVersion({ currentVersions, allVersions });
+  return createGlobalVersion({ currentVersions, allVersions, next });
 }
 
 module.exports = createVersion;
