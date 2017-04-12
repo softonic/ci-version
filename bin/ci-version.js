@@ -12,10 +12,15 @@ prog
     'Compatible with version in the specified file (allowed: package.json, composer.json)',
     ['package.json', 'composer.json']
   )
+  .option('--next', 'Return the next version that would be created', prog.BOOL)
   .action(function(args, options) {
-    const { repository, compatibleWith } = options;
+    const { repository, compatibleWith, next } = options;
 
-    const newVersion = createVersion({ repositoryPath: repository, compatibleWith });
+    const newVersion = createVersion({
+      repositoryPath: repository,
+      compatibleWith,
+      isNext: next
+    });
     console.log(newVersion || '');
   });
 

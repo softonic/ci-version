@@ -68,12 +68,15 @@ function getVersions(repositoryPath) {
 /**
  * Returns a suitable version for the current commit in the given repository,
  * optionally compatible with the version found in the given file format.
- * @param  {string} repositoryPath [description]
+ * @param  {string} repositoryPath
  * @param  {string} [compatibleWith] 'package.json' or 'composer.json'
+ * @param  {boolean} [isNext=false] return the next version that would be created.
  * @return {string|null}
  */
-function createVersion({ repositoryPath, compatibleWith }) {
-  const { currentVersions, allVersions } = getVersions(repositoryPath);
+function createVersion({ repositoryPath, compatibleWith, isNext }) {
+  const versions = getVersions(repositoryPath);
+  const currentVersions = isNext ? [] : versions.currentVersions;
+  const allVersions = versions.allVersions;
 
   if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
     const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, compatibleWith)));

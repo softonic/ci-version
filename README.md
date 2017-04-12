@@ -34,6 +34,8 @@ The repository should always be mounted in `/repo` or otherwise the entrypoint s
 
 The version returned (if any) it is supposed to be used to create a new tag in the repository.
 
+If we want to have the next tag version that we should create, we can use --next option.
+
 ## How it works
 
 ### Without compatible-with option
@@ -65,6 +67,14 @@ Examples:
   Current commit tags: 1.2.0
   All tags: 1.0.0 1.1.0 1.2.0
   => New version: <none>
+  ```
+
+- Prepare next commit (Using --next option)
+
+  ```
+  Current commit tags: 1.2.0
+  All tags: 1.0.0 1.1.0 1.2.0
+  => New version: 1.3.0
   ```
 
 ### With compatible-with option
