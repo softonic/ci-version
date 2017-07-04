@@ -73,13 +73,13 @@ function getVersions(repositoryPath) {
  * @param  {boolean} [isNext=false] return the next version that would be created.
  * @return {string|null}
  */
-function createVersion({ repositoryPath, compatibleWith, isNext }) {
+function createVersion({ repositoryPath, compatibleWith, isNext, versionPath }) {
   const versions = getVersions(repositoryPath);
   const currentVersions = isNext ? [] : versions.currentVersions;
   const allVersions = versions.allVersions;
 
   if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
-    const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, compatibleWith)));
+    const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, versionPath, compatibleWith)));
     compatibleWith = semver.clean(pkg.version);
     return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
   }
