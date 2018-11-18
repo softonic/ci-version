@@ -15,7 +15,7 @@ function createCompatibleVersion({ currentVersions, allVersions, compatibleWith 
     return null;
   }
 
-  const maxCompatible = semver.maxSatisfying(allVersions, `^${compatibleWith}`);
+  const maxCompatible = semver.maxSatisfying(allVersions, `>${compatibleWith}`);
   if (!maxCompatible) {
     return compatibleWith;
   }

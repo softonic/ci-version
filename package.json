@@ -1,6 +1,6 @@
 {
   "name": "@softonic/ci-version",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "CLI program to determine new versions in CI projects",
   "main": "index.js",
   "bin": {
