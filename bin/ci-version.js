@@ -10,7 +10,8 @@ prog
   .option(
     '-c --compatible-with [format]',
     'Compatible with version in the specified file (allowed: package.json, composer.json)',
-    ['package.json', 'composer.json']
+    prog.STRING,
+    ''
   )
   .option(
     '-e --prefix [prefix]',
