@@ -79,10 +79,14 @@ function createVersion({ repositoryPath, compatibleWith, isNext, versionPath, pr
   const currentVersions = isNext ? [] : versions.currentVersions;
   const allVersions = versions.allVersions;
 
-  if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
-    const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, versionPath, compatibleWith)));
-    compatibleWith = semver.clean(pkg.version);
-    version = createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
+  if (compatibleWith != '') {
+    const filePath = path.join(repositoryPath, versionPath, compatibleWith)
+    if (!fs.existsSync(filePath)) {
+      throw new Error("File " + compatibleWith + " does not exist at " + filePath)
+    }
+    const pkg = JSON.parse(fs.readFileSync(filePath));
+    compatibleWith = semver.clean(pkg.version || '');
+    return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
   }
 
   version = createGlobalVersion({ currentVersions, allVersions });
