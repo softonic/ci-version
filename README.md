@@ -130,6 +130,42 @@ Examples:
   package.json/composer.json: 2.0.0
   => New version: <none>
   ```
+### With prefix option
+
+In some repository, we might want to tag with a prefix to tag different applications living in the same repo.
+For this purpose, we can use `--prefix` (`-e`)option: we will identify only tags starting with such prefix, and the returned
+tag version will be prefixed with such value.
+
+Examples:
+
+`-- prefix "application-"`
+
+- First build:
+
+  ```
+  Current commit tags: <none>
+  All tags: <none>
+  package.json/composer.json: 1.0.0
+  => New version: application-1.0.0
+  ```
+
+- Build of a new commit with same prefix tags
+
+  ```
+  Current commit tags: <none>
+  All tags: application-1.1.0 application-1.2.0 application-1.3.0
+  package.json/composer.json: 1.0.0
+  => New version: application-1.4.0
+  ```
+
+- Build of a new commit with mixed prefix tags
+
+  ```
+  Current commit tags: <none>
+  All tags: application-1.1.0 application-1.2.0 application-1.3.0 app-1.3.0 app-1.1.0 app-1.2.0
+  package.json/composer.json: 1.0.0
+  => New version: application-1.4.0
+  ```
 
 ## Contributing
 
