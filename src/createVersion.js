@@ -85,8 +85,12 @@ function createVersion({ repositoryPath, compatibleWith, isNext, versionPath, pr
       throw new Error("File " + compatibleWith + " does not exist at " + filePath)
     }
     const pkg = JSON.parse(fs.readFileSync(filePath));
-    compatibleWith = semver.clean(pkg.version || '');
-    return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
+
+    return createCompatibleVersion({
+      currentVersions,
+      allVersions,
+      compatibleWith: semver.clean(pkg.version || '') 
+    })
   }
 
   version = createGlobalVersion({ currentVersions, allVersions });
