@@ -49,12 +49,13 @@ function createGlobalVersion({ currentVersions, allVersions, compatibleWith }) {
 /**
  * Returns the versions in the current commit and the version in all the repository
  * @param  {string} repositoryPath
+ * @param  {string} prefix
  * @return {{ currentVersions: string[], allVersions: string[] }}
  */
-function getVersions(repositoryPath) {
+function getVersions(repositoryPath, prefix) {
   const cwd = repositoryPath;
   const currentTagsStr = execSync('git tag --contains HEAD', { cwd }).toString();
-  const allTagsStr = execSync('git tag -l', { cwd }).toString();
+  const allTagsStr = execSync('git tag -l | grep "^' + prefix + '" | sed "s/^'+ prefix + '//g"', { cwd }).toString();
 
   const parseTags = tagListStr => tagListStr.split('\n').map(s => s.trim());
   const extractVersionsFromTags = tags => tags.map(tag => semver.valid(tag)).filter(Boolean);
@@ -73,18 +74,22 @@ function getVersions(repositoryPath) {
  * @param  {boolean} [isNext=false] return the next version that would be created.
  * @return {string|null}
  */
-function createVersion({ repositoryPath, compatibleWith, isNext, versionPath }) {
-  const versions = getVersions(repositoryPath);
+function createVersion({ repositoryPath, compatibleWith, isNext, versionPath, prefix }) {
+  const versions = getVersions(repositoryPath, prefix);
   const currentVersions = isNext ? [] : versions.currentVersions;
   const allVersions = versions.allVersions;
 
   if (compatibleWith === 'package.json' || compatibleWith === 'composer.json') {
     const pkg = JSON.parse(fs.readFileSync(path.join(repositoryPath, versionPath, compatibleWith)));
     compatibleWith = semver.clean(pkg.version);
-    return createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
+    version = createCompatibleVersion({ currentVersions, allVersions, compatibleWith })
   }
 
-  return createGlobalVersion({ currentVersions, allVersions });
+  version = createGlobalVersion({ currentVersions, allVersions });
+  if (version != null) {
+    version = prefix + version
+  }
+  return version
 }
 
 module.exports = createVersion;
