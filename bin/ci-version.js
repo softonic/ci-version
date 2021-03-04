@@ -13,7 +13,7 @@ prog
     ['package.json', 'composer.json']
   )
   .option(
-    '-r --prefix [prefix]',
+    '-e --prefix [prefix]',
     'Tag prefix (useful for repos with multiple versions: tags like application-v1.2.0 would need prefix `application-`',
     prog.STRING,
     ''

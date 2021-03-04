@@ -133,7 +133,7 @@ Examples:
 ### With prefix option
 
 In some repository, we might want to tag with a prefix to tag different applications living in the same repo.
-For this purpose, we can use `prefix` option: we will identify only tags starting with such prefix, and the returned
+For this purpose, we can use `--prefix` (`-e`)option: we will identify only tags starting with such prefix, and the returned
 tag version will be prefixed with such value.
 
 Examples:
